@@ -1,4 +1,7 @@
-package com.example.dictionary
+package com.example.dictionary.presenter
+
+import com.example.dictionary.ui.base.View
+import com.example.dictionary.model.data.AppState
 
 interface Presenter<T: AppState, V: View> {
 

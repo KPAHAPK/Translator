@@ -1,7 +1,9 @@
-package com.example.dictionary
+package com.example.dictionary.ui.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.dictionary.model.data.AppState
+import com.example.dictionary.presenter.Presenter
 
 abstract class BaseActivity<T: AppState> : AppCompatActivity(), View {
 
