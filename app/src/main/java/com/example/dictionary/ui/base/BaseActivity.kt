@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dictionary.model.data.AppState
 import com.example.dictionary.presenter.Presenter
 
-abstract class BaseActivity<T: AppState> : AppCompatActivity(), View {
+abstract class BaseActivity<T : AppState> : AppCompatActivity(), View {
 
     protected lateinit var presenter: Presenter<T, View>
 

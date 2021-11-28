@@ -6,24 +6,24 @@ import com.example.dictionary.model.datasource.DataSourceRemote
 import com.example.dictionary.model.repository.RepositoryImplementation
 import com.example.dictionary.presenter.Presenter
 import com.example.dictionary.ui.base.View
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class MainPresenter<T: AppState, V: View>(
+class MainPresenter<T : AppState, V : View>(
     private val interactor: MainInteractor = MainInteractor(
         RepositoryImplementation(DataSourceRemote()),
         RepositoryImplementation(DataSourceLocal())
     ),
     protected val compositeDisposable: CompositeDisposable = CompositeDisposable(),
     //protected val scheduleProvider: SchedulerProvider = SchedulerProvider()
-): Presenter<T, V> {
+) : Presenter<T, V> {
 
     private var currentView: V? = null
 
     override fun attachView(view: V) {
-        if (view != currentView){
+        if (view != currentView) {
             currentView = view
         }
     }
@@ -40,12 +40,12 @@ class MainPresenter<T: AppState, V: View>(
             interactor.getData(word, isOnline)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe{currentView?.renderData(AppState.Loading(null))}
+                .doOnSubscribe { currentView?.renderData(AppState.Loading(null)) }
                 .subscribeWith(getObserver())
         )
     }
 
-    private fun getObserver() : DisposableObserver<AppState> {
+    private fun getObserver(): DisposableObserver<AppState> {
         return object : DisposableObserver<AppState>() {
             override fun onNext(appState: AppState) {
                 currentView?.renderData(appState)

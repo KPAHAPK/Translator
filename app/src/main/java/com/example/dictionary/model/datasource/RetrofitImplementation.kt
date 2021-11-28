@@ -12,18 +12,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitImplementation : DataSource<List<DataModel>> {
 
     companion object {
-        private  const val BASE_URL_LOCATIONS = "https://dictionary.skyeng.ru/api/public/v1/"
+        private const val BASE_URL_LOCATIONS = "https://dictionary.skyeng.ru/api/public/v1/"
     }
 
     override fun getData(word: String): Observable<List<DataModel>> {
         return getService(BaseInterceptor.interceptor).search(word)
     }
 
-    private fun getService(interceptor: Interceptor) : ApiService {
+    private fun getService(interceptor: Interceptor): ApiService {
         return createRetrofit(interceptor).create(ApiService::class.java)
     }
 
-    private fun createRetrofit(interceptor: Interceptor) : Retrofit {
+    private fun createRetrofit(interceptor: Interceptor): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL_LOCATIONS)
             .addConverterFactory(GsonConverterFactory.create())
