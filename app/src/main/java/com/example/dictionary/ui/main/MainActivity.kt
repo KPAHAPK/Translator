@@ -2,18 +2,27 @@ package com.example.dictionary.ui.main
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dictionary.R
 import com.example.dictionary.databinding.ActivityMainBinding
 import com.example.dictionary.model.data.AppState
 import com.example.dictionary.model.data.DataModel
-import com.example.dictionary.presenter.Presenter
+import com.example.dictionary.model.viewmodel.MainViewModel
 import com.example.dictionary.ui.base.BaseActivity
-import com.example.dictionary.ui.base.View
 import com.example.dictionary.ui.main.adapter.MainAdapter
 import android.view.View as androidView
 
 class MainActivity : BaseActivity<AppState>() {
+
+    override val viewModel: MainViewModel by lazy {
+        ViewModelProvider.NewInstanceFactory().create(MainViewModel::class.java)
+    }
+
+    private val observer = Observer<AppState> {
+        renderData(it)
+    }
 
     private lateinit var binding: ActivityMainBinding
 
@@ -41,15 +50,11 @@ class MainActivity : BaseActivity<AppState>() {
             searchDialogFragment.setOnSearchClickListener(object :
                 SearchDialogFragment.OnSearchClickListener {
                 override fun onClick(searchWord: String) {
-                    presenter.getData(searchWord, true)
+                    viewModel.getData(searchWord, true).observe(this@MainActivity, observer)
                 }
             })
             searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
         }
-    }
-
-    override fun createPresenter(): Presenter<AppState, View> {
-        return MainPresenter()
     }
 
     override fun renderData(appState: AppState) {
@@ -109,7 +114,9 @@ class MainActivity : BaseActivity<AppState>() {
         showViewError()
         binding.errorTextview.text = error ?: getString(R.string.undefined_error)
         binding.reloadButton.setOnClickListener {
-            presenter.getData("hi", true)
+            viewModel.getData("hi", true).observe(this, observer)
         }
     }
+
+
 }
