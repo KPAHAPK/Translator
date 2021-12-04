@@ -1,6 +1,4 @@
 package com.example.dictionary.di
 
-class DiConstants {
-
-    internal val
-}
+internal const val NAME_REMOTE = "Remote"
+internal const val NAME_LOCAL = "Local"

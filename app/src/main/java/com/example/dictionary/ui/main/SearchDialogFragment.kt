@@ -38,7 +38,7 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
         }
 
         override fun afterTextChanged(s: Editable?) {
-            TODO("Not yet implemented")
+
         }
     }
 

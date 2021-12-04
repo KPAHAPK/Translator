@@ -1,6 +1,5 @@
 package com.example.dictionary.model.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.dictionary.model.data.AppState
@@ -11,7 +10,7 @@ abstract class BaseViewModel<T : AppState>(
     protected val compositeDisposable: CompositeDisposable = CompositeDisposable(),
 ) : ViewModel() {
 
-    open fun getData(word: String, isOnline: Boolean): LiveData<T> =liveDataForViewToObserve
+    abstract fun getData(word: String, isOnline: Boolean)
 
     override fun onCleared() {
         compositeDisposable.clear()
