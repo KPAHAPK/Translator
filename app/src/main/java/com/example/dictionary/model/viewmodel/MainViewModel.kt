@@ -15,11 +15,11 @@ class MainViewModel @Inject constructor(
 
     private var appState: AppState? = null
 
-    fun subscribe(): LiveData<AppState>{
+    fun subscribe(): LiveData<AppState> {
         return liveDataForViewToObserve
     }
 
-    override fun getData(word: String, isOnline: Boolean){
+    override fun getData(word: String, isOnline: Boolean) {
         compositeDisposable.add(
             interactor.getData(word, isOnline)
                 .subscribeOn(Schedulers.io())
@@ -30,7 +30,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun doOnSubscribe(): (Disposable) -> Unit =
-        {liveDataForViewToObserve.value = AppState.Loading(null)}
+        { liveDataForViewToObserve.value = AppState.Loading(null) }
 
     private fun getObserver(): DisposableObserver<AppState> {
         return object : DisposableObserver<AppState>() {

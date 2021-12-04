@@ -52,7 +52,7 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSearchDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
