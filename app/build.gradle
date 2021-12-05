@@ -37,9 +37,26 @@ android {
     kapt {
         correctErrorTypes = true
     }
+
+    buildFeatures {
+        viewBinding true
+    }
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
+
+    //Koin
+//Текущая версия библиотеки
+    def koin_version= "3.1.2"
+//Основная библиотека
+    implementation "io.insert-koin:koin-core:$koin_version"
+//Koin для поддержки Android (Scope,ViewModel ...)
+    implementation "io.insert-koin:koin-android:$koin_version"
+//Для совместимости с Java
+    implementation "io.insert-koin:koin-android-compat:$koin_version"
 
     //Dagger
     def daggerVer = 2.40 // or latest version

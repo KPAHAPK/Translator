@@ -2,7 +2,6 @@ package com.example.dictionary.ui.main
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dictionary.R
 import com.example.dictionary.databinding.ActivityMainBinding
@@ -12,16 +11,12 @@ import com.example.dictionary.model.viewmodel.MainViewModel
 import com.example.dictionary.ui.base.BaseActivity
 import com.example.dictionary.ui.main.adapter.MainAdapter
 import dagger.android.AndroidInjection
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.view.View as androidView
 
 class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
-
     override lateinit var viewModel: MainViewModel
-
     private lateinit var binding: ActivityMainBinding
 
     companion object {
@@ -38,6 +33,31 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
         }
 
+
+    private val fabClickListener = androidView.OnClickListener {
+        val searchDialogFragment = SearchDialogFragment.newInstance()
+        searchDialogFragment.setOnSearchClickListener(object :
+            SearchDialogFragment.OnSearchClickListener {
+            override fun onClick(searchWord: String) {
+                viewModel.getData(searchWord, true)
+            }
+        })
+        searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
+    }
+
+    private fun initViewModel() {
+        if (binding.mainActivityRecyclerview.adapter != null) {
+            throw IllegalStateException("The ViewModel should be initialised first")
+        }
+
+        val model: MainViewModel by viewModel()
+        viewModel = model
+
+        viewModel.subscribe().observe(this) {
+            renderData(it)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
 
@@ -45,22 +65,11 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = viewModelFactory.create(MainViewModel::class.java)
-        viewModel.subscribe().observe(this) {
-            renderData(it)
-        }
+        initViewModel()
 
-        binding.searchFab.setOnClickListener {
-            val searchDialogFragment = SearchDialogFragment.newInstance()
-            searchDialogFragment.setOnSearchClickListener(object :
-                SearchDialogFragment.OnSearchClickListener {
-                override fun onClick(searchWord: String) {
-                    viewModel.getData(searchWord, true)
-                }
-            })
-            searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
-        }
+        binding.searchFab.setOnClickListener(fabClickListener)
     }
+
 
     override fun renderData(appState: AppState) {
         when (appState) {
@@ -74,7 +83,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
                         binding.mainActivityRecyclerview.layoutManager =
                             LinearLayoutManager(applicationContext)
                         binding.mainActivityRecyclerview.adapter =
-                            MainAdapter(onListItemClickListener, dataModel)
+                            MainAdapter(onListItemClickListener)
                     } else {
                         adapter!!.setData((dataModel))
                     }

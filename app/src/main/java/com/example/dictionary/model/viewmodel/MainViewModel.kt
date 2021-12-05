@@ -9,7 +9,7 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class MainViewModel (
     private val interactor: MainInteractor
 ) : BaseViewModel<AppState>() {
 
