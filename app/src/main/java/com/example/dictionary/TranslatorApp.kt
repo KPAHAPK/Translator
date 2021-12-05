@@ -5,7 +5,7 @@ import com.example.dictionary.di.koin.application
 import com.example.dictionary.di.koin.mainScreen
 import org.koin.core.context.startKoin
 
-class TranslatorApp : Application(){
+class TranslatorApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
