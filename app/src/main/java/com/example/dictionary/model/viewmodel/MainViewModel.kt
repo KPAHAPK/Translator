@@ -18,7 +18,7 @@ class MainViewModel(
         return liveDataForViewToObserve
     }
 
-    override suspend fun getData(word: String, isOnline: Boolean) {
+    override fun getData(word: String, isOnline: Boolean) {
         mutableLiveData.value = AppState.Loading(null)
         cancelJob()
         viewModelCoroutineScope.launch {
