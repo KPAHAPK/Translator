@@ -1,19 +1,15 @@
 package com.example.dictionary.ui.main
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dictionary.R
 import com.example.dictionary.convertMeaningsToString
 import com.example.dictionary.databinding.ActivityMainBinding
 import com.example.dictionary.isOnline
 import com.example.dictionary.model.data.AppState
 import com.example.dictionary.model.data.DataModel
-import com.example.dictionary.model.data.Meanings
 import com.example.dictionary.model.viewmodel.MainViewModel
 import com.example.dictionary.ui.base.BaseActivity
 import com.example.dictionary.ui.main.adapter.MainAdapter
-import dagger.android.AndroidInjection
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.view.View as androidView
 
@@ -44,7 +40,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         }
 
     private val onSearchClickListener: SearchDialogFragment.OnSearchClickListener =
-        object : SearchDialogFragment.OnSearchClickListener{
+        object : SearchDialogFragment.OnSearchClickListener {
             override fun onClick(searchWord: String) {
                 isNetworkAvailable = isOnline(applicationContext)
                 if (isNetworkAvailable) {
@@ -96,49 +92,4 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
             LinearLayoutManager(applicationContext)
         binding.mainActivityRecyclerview.adapter = adapter
     }
-
-    override fun renderData(appState: AppState) {
-        when (appState) {
-            is AppState.Success -> {
-                showViewWorking()
-                val dataModel = appState.data
-                if (dataModel.isNullOrEmpty()) {
-                    showAlertDialog(
-                        getString(R.string.dialog_title_sorry),
-                        getString(R.string.empty_server_response_on_success)
-                    )
-                } else {
-                    adapter.setData((dataModel))
-                }
-            }
-            is AppState.Loading -> {
-                showViewLoading()
-                if (appState.progress != null) {
-                    binding.progressBarHorizontal.visibility = androidView.VISIBLE
-                    binding.progressBarRound.visibility = androidView.GONE
-                    binding.progressBarHorizontal.visibility = appState.progress
-                } else {
-                    binding.progressBarHorizontal.visibility = androidView.GONE
-                    binding.progressBarRound.visibility = androidView.VISIBLE
-                }
-            }
-            is AppState.Error -> {
-                showViewWorking()
-                showAlertDialog(
-                    getString(R.string.error_stub),
-                    appState.error.message.toString()
-                )
-            }
-        }
-    }
-
-    private fun showViewWorking() {
-        binding.loadingFrameLayout.visibility = androidView.GONE
-    }
-
-    private fun showViewLoading() {
-        binding.loadingFrameLayout.visibility = androidView.VISIBLE
-    }
-
-
 }

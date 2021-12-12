@@ -1,4 +1,4 @@
-package com.example.dictionary.db
+package com.example.dictionary.history
 
 import androidx.room.*
 

@@ -1,9 +1,9 @@
-package com.example.dictionary.model.viewmodel
+package com.example.dictionary.history
 
 import androidx.lifecycle.LiveData
-import com.example.dictionary.main.HistoryInteractor
 import com.example.dictionary.model.data.AppState
-import com.example.dictionary.parseSearchResult
+import com.example.dictionary.model.viewmodel.BaseViewModel
+import com.example.dictionary.parseLocalSearchResults
 import kotlinx.coroutines.launch
 
 class HistoryViewModel(private val interactor: HistoryInteractor) : BaseViewModel<AppState>() {
@@ -22,7 +22,7 @@ class HistoryViewModel(private val interactor: HistoryInteractor) : BaseViewMode
         _mutableLiveData.value = AppState.Loading(null)
         cancelJob()
         viewModelCoroutineScope.launch {
-            _mutableLiveData.postValue(parseLocalSearchResult(interactor.getData(word, isOnline)))
+            _mutableLiveData.postValue(parseLocalSearchResults(interactor.getData(word, isOnline)))
         }
     }
 

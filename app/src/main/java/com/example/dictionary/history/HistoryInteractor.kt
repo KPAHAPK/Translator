@@ -1,4 +1,4 @@
-package com.example.dictionary.main
+package com.example.dictionary.history
 
 import com.example.dictionary.model.data.AppState
 import com.example.dictionary.model.data.DataModel

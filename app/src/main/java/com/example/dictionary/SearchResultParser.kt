@@ -1,6 +1,6 @@
 package com.example.dictionary
 
-import com.example.dictionary.db.HistoryEntity
+import com.example.dictionary.history.HistoryEntity
 import com.example.dictionary.model.data.AppState
 import com.example.dictionary.model.data.DataModel
 import com.example.dictionary.model.data.Meanings
@@ -9,7 +9,7 @@ fun parseOnlineSearchResult(appState: AppState): AppState{
     return AppState.Success(mapResult(appState, true))
 }
 
-fun parseLocalSearcjResults(appState: AppState): AppState{
+fun parseLocalSearchResults(appState: AppState): AppState{
     return AppState.Success(mapResult(appState, false))
 }
 
@@ -83,6 +83,16 @@ fun parseResult(dataModel: DataModel, newListDataModel: ArrayList<DataModel>) {
             newListDataModel.add(DataModel(dataModel.text, newMeanings))
         }
     }
+}
+
+fun mapHistoryEntityToSearchResult(list: List<HistoryEntity>): List<DataModel> {
+    val searchResult = ArrayList<DataModel>()
+    if (!list.isNullOrEmpty()) {
+        for (entity in list) {
+            searchResult.add(DataModel(entity.word, null))
+        }
+    }
+    return searchResult
 }
 
 fun convertDataModelSuccessToEntity(appState: AppState): HistoryEntity? {
