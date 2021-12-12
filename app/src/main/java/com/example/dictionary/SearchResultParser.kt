@@ -1,8 +1,60 @@
 package com.example.dictionary
 
+import com.example.dictionary.db.HistoryEntity
 import com.example.dictionary.model.data.AppState
 import com.example.dictionary.model.data.DataModel
 import com.example.dictionary.model.data.Meanings
+
+fun parseOnlineSearchResult(appState: AppState): AppState{
+    return AppState.Success(mapResult(appState, true))
+}
+
+fun parseLocalSearcjResults(appState: AppState): AppState{
+    return AppState.Success(mapResult(appState, false))
+}
+
+fun mapResult(appState: AppState, isOnline: Boolean): List<DataModel>? {
+    val newSearchResult = arrayListOf<DataModel>()
+    when (appState) {
+        is AppState.Success -> {
+            getSuccessResultData(appState,isOnline,newSearchResult)
+        }
+    }
+    return newSearchResult
+}
+
+fun getSuccessResultData(
+    appState: AppState.Success,
+    isOnline: Boolean,
+    newDataModel: java.util.ArrayList<DataModel>,
+) {
+    val dataModels: List<DataModel> = appState.data as List<DataModel>
+    if (dataModels.isNotEmpty()){
+        if (isOnline) {
+            for (searchResult in dataModels){
+                parseOnlineResult(searchResult, newDataModel)
+            }
+        }else {
+            for (searchResult in dataModels){
+                newDataModel.add(DataModel(searchResult.text, searchResult.meanings))
+            }
+        }
+    }
+}
+
+fun parseOnlineResult(dataModel: DataModel, newDataModel: java.util.ArrayList<DataModel>) {
+    if (!dataModel.text.isNullOrBlank() && !dataModel.meanings.isNullOrEmpty()){
+        val newMeanings  = arrayListOf<Meanings>()
+        for (meaning in dataModel.meanings){
+            if (meaning.translation != null && !meaning.translation.text.isNullOrBlank()){
+                newMeanings.add(Meanings(meaning.translation, meaning. imageUrl))
+            }
+        }
+        if (newMeanings.isNotEmpty()){
+            newDataModel.add(DataModel(dataModel.text, newMeanings))
+        }
+    }
+}
 
 fun parseSearchResult(data: AppState): AppState {
     val newSearchResults = arrayListOf<DataModel>()
@@ -30,6 +82,20 @@ fun parseResult(dataModel: DataModel, newListDataModel: ArrayList<DataModel>) {
         if (newMeanings.isNotEmpty()) {
             newListDataModel.add(DataModel(dataModel.text, newMeanings))
         }
+    }
+}
+
+fun convertDataModelSuccessToEntity(appState: AppState): HistoryEntity? {
+    return when (appState) {
+        is AppState.Success -> {
+            val searchReuslt = appState.data
+            if (searchReuslt.isNullOrEmpty() || searchReuslt[0].text.isNullOrEmpty()) {
+                null
+            } else {
+                HistoryEntity(searchReuslt[0].text!!, null)
+            }
+        }
+        else -> null
     }
 }
 
