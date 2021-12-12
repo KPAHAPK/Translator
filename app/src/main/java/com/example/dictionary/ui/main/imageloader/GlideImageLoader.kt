@@ -1,4 +1,4 @@
-package com.example.dictionary.ui.main
+package com.example.dictionary.ui.main.imageloader
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -10,6 +10,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.example.dictionary.R
+import com.example.dictionary.ui.main.DescriptionActivity
 
 class GlideImageLoader(private val context: Context): IImageLoader {
     override fun loadImage(imageView: ImageView, imageLink: String) {

@@ -1,4 +1,4 @@
-package com.example.dictionary.ui.main
+package com.example.dictionary.ui.main.imageloader
 
 import android.widget.ImageView
 

@@ -1,6 +1,7 @@
 package com.example.dictionary.model.datasource
 
 import com.example.dictionary.model.data.DataModel
+import com.example.dictionary.ui.base.BaseInterceptor
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

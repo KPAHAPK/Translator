@@ -1,8 +1,9 @@
-package com.example.dictionary.ui.main
+package com.example.dictionary.ui.main.imageloader
 
 import android.content.Context
 import android.widget.ImageView
 import com.example.dictionary.R
+import com.example.dictionary.ui.main.DescriptionActivity
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.lang.Exception

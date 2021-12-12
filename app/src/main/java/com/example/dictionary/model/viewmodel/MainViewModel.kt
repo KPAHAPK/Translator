@@ -12,14 +12,14 @@ class MainViewModel(
     private val interactor: MainInteractor
 ) : BaseViewModel<AppState>() {
 
-    private val liveDataForViewToObserve: LiveData<AppState> = mutableLiveData
+    private val liveDataForViewToObserve: LiveData<AppState> = _mutableLiveData
 
     fun subscribe(): LiveData<AppState> {
         return liveDataForViewToObserve
     }
 
     override fun getData(word: String, isOnline: Boolean) {
-        mutableLiveData.value = AppState.Loading(null)
+        _mutableLiveData.value = AppState.Loading(null)
         cancelJob()
         viewModelCoroutineScope.launch {
             startInteractor(word, isOnline)
@@ -28,16 +28,16 @@ class MainViewModel(
 
     private suspend fun startInteractor(word: String, isOnline: Boolean) =
         withContext(Dispatchers.IO) {
-            mutableLiveData.postValue(parseSearchResult(interactor.getData(word, isOnline)))
+            _mutableLiveData.postValue(parseSearchResult(interactor.getData(word, isOnline)))
         }
 
 
     override fun handlerError(error: Throwable) {
-        mutableLiveData.postValue(AppState.Error(error))
+        _mutableLiveData.postValue(AppState.Error(error))
     }
 
     override fun onCleared() {
-        mutableLiveData.value = AppState.Success(null)
+        _mutableLiveData.value = AppState.Success(null)
         super.onCleared()
     }
 }

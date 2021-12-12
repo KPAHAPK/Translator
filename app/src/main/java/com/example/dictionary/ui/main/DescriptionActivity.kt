@@ -17,6 +17,8 @@ import com.example.dictionary.R
 import com.example.dictionary.databinding.ActivityDescriptionBinding
 import com.example.dictionary.isOnline
 import com.example.dictionary.ui.AlertDialogFragment
+import com.example.dictionary.ui.main.imageloader.GlideImageLoader
+import com.example.dictionary.ui.main.imageloader.IImageLoader
 
 class DescriptionActivity : AppCompatActivity() {
 
