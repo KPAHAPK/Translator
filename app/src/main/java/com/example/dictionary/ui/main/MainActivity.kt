@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dictionary.R
+import com.example.dictionary.convertMeaningsToString
 import com.example.dictionary.databinding.ActivityMainBinding
 import com.example.dictionary.isOnline
 import com.example.dictionary.model.data.AppState
 import com.example.dictionary.model.data.DataModel
+import com.example.dictionary.model.data.Meanings
 import com.example.dictionary.model.viewmodel.MainViewModel
 import com.example.dictionary.ui.base.BaseActivity
 import com.example.dictionary.ui.main.adapter.MainAdapter
@@ -29,7 +31,14 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
             override fun onItemClick(data: DataModel) {
-                Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
+                startActivity(
+                    DescriptionActivity.getIntent(
+                        this@MainActivity,
+                        data.text!!,
+                        convertMeaningsToString(data.meanings!!),
+                        data.meanings[0].imageUrl
+                    )
+                )
             }
 
         }
@@ -52,7 +61,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         searchDialogFragment.setOnSearchClickListener(object :
             SearchDialogFragment.OnSearchClickListener {
             override fun onClick(searchWord: String) {
-                viewModel.getData(searchWord, true)
+                searchDialogFragment.setOnSearchClickListener(onSearchClickListener)
             }
         })
         searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
