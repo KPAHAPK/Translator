@@ -2,14 +2,16 @@ package com.example.dictionary.model.viewmodel
 
 import androidx.lifecycle.LiveData
 import com.example.dictionary.model.data.AppState
+import com.example.dictionary.parseOnlineSearchResult
 import com.example.dictionary.parseSearchResult
 import com.example.dictionary.ui.main.MainInteractor
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainViewModel(
-    private val interactor: MainInteractor
+    private val interactor: MainInteractor,
 ) : BaseViewModel<AppState>() {
 
     private val liveDataForViewToObserve: LiveData<AppState> = _mutableLiveData
@@ -28,7 +30,8 @@ class MainViewModel(
 
     private suspend fun startInteractor(word: String, isOnline: Boolean) =
         withContext(Dispatchers.IO) {
-            _mutableLiveData.postValue(parseSearchResult(interactor.getData(word, isOnline)))
+            val result = parseOnlineSearchResult(interactor.getData(word, isOnline))
+            _mutableLiveData.postValue(result)
         }
 
 

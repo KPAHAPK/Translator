@@ -7,13 +7,13 @@ import coil.request.LoadRequest
 import coil.transform.CircleCropTransformation
 import com.example.dictionary.R
 
-class CoilImageLoader(private val context: Context): IImageLoader {
+class CoilImageLoader(private val context: Context) : IImageLoader {
     override fun loadImage(imageView: ImageView, imageLink: String) {
         val request = LoadRequest.Builder(context)
             .data("http:$imageLink")
             .target(
                 onStart = {},
-                onSuccess = {result ->
+                onSuccess = { result ->
                     imageView.setImageDrawable(result)
                 },
                 onError = {

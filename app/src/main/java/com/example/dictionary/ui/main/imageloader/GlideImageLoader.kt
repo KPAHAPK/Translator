@@ -12,7 +12,7 @@ import com.bumptech.glide.request.target.Target
 import com.example.dictionary.R
 import com.example.dictionary.ui.main.DescriptionActivity
 
-class GlideImageLoader(private val context: Context): IImageLoader {
+class GlideImageLoader(private val context: Context) : IImageLoader {
     override fun loadImage(imageView: ImageView, imageLink: String) {
         Glide.with(imageView)
             .load("https:$imageLink")
@@ -23,8 +23,8 @@ class GlideImageLoader(private val context: Context): IImageLoader {
                     target: Target<Drawable>?,
                     isFirstResource: Boolean,
                 ): Boolean {
-                    if (context is DescriptionActivity){
-                    context.stopRefreshAnimationIfNeeded()
+                    if (context is DescriptionActivity) {
+                        context.stopRefreshAnimationIfNeeded()
                     }
                     imageView.setImageResource(R.drawable.ic_load_error_vector)
                     return false
@@ -37,7 +37,7 @@ class GlideImageLoader(private val context: Context): IImageLoader {
                     dataSource: DataSource?,
                     isFirstResource: Boolean,
                 ): Boolean {
-                    if (context is DescriptionActivity){
+                    if (context is DescriptionActivity) {
                         context.stopRefreshAnimationIfNeeded()
                     }
                     return false

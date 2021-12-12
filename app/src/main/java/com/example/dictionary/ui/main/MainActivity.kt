@@ -1,9 +1,14 @@
 package com.example.dictionary.ui.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dictionary.R
 import com.example.dictionary.convertMeaningsToString
 import com.example.dictionary.databinding.ActivityMainBinding
+import com.example.dictionary.history.HistoryActivity
 import com.example.dictionary.isOnline
 import com.example.dictionary.model.data.AppState
 import com.example.dictionary.model.data.DataModel
@@ -54,12 +59,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
     private val fabClickListener = androidView.OnClickListener {
         val searchDialogFragment = SearchDialogFragment.newInstance()
-        searchDialogFragment.setOnSearchClickListener(object :
-            SearchDialogFragment.OnSearchClickListener {
-            override fun onClick(searchWord: String) {
-                searchDialogFragment.setOnSearchClickListener(onSearchClickListener)
-            }
-        })
+        searchDialogFragment.setOnSearchClickListener(onSearchClickListener)
         searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
     }
 
@@ -80,9 +80,23 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
         val model: MainViewModel by viewModel()
         viewModel = model
-
         viewModel.subscribe().observe(this) {
             renderData(it)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.history_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_history -> {
+                startActivity(Intent(this, HistoryActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -91,5 +105,9 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         binding.mainActivityRecyclerview.layoutManager =
             LinearLayoutManager(applicationContext)
         binding.mainActivityRecyclerview.adapter = adapter
+    }
+
+    override fun setDataToAdapter(data: List<DataModel>) {
+        adapter.setData(data)
     }
 }

@@ -4,7 +4,8 @@ import com.example.dictionary.model.data.AppState
 import com.example.dictionary.model.data.DataModel
 import com.example.dictionary.model.datasource.DataSourceLocal
 
-class RepositoryLocalImplementation(private val dataSource: DataSourceLocal<List<DataModel>>): RepositoryLocal<List<DataModel>> {
+class RepositoryLocalImplementation(private val dataSource: DataSourceLocal<List<DataModel>>) :
+    RepositoryLocal<List<DataModel>> {
     override suspend fun getData(word: String): List<DataModel> {
         return dataSource.getData(word)
     }

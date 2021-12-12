@@ -11,5 +11,5 @@ class HistoryEntity(
     @ColumnInfo(name = "word")
     var word: String,
     @ColumnInfo(name = "description")
-    var description: String?
-){}
+    var description: String?,
+)

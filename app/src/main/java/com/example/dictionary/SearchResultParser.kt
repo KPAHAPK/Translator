@@ -5,11 +5,11 @@ import com.example.dictionary.model.data.AppState
 import com.example.dictionary.model.data.DataModel
 import com.example.dictionary.model.data.Meanings
 
-fun parseOnlineSearchResult(appState: AppState): AppState{
+fun parseOnlineSearchResult(appState: AppState): AppState {
     return AppState.Success(mapResult(appState, true))
 }
 
-fun parseLocalSearchResults(appState: AppState): AppState{
+fun parseLocalSearchResults(appState: AppState): AppState {
     return AppState.Success(mapResult(appState, false))
 }
 
@@ -17,7 +17,7 @@ fun mapResult(appState: AppState, isOnline: Boolean): List<DataModel>? {
     val newSearchResult = arrayListOf<DataModel>()
     when (appState) {
         is AppState.Success -> {
-            getSuccessResultData(appState,isOnline,newSearchResult)
+            getSuccessResultData(appState, isOnline, newSearchResult)
         }
     }
     return newSearchResult
@@ -29,13 +29,13 @@ fun getSuccessResultData(
     newDataModel: java.util.ArrayList<DataModel>,
 ) {
     val dataModels: List<DataModel> = appState.data as List<DataModel>
-    if (dataModels.isNotEmpty()){
+    if (dataModels.isNotEmpty()) {
         if (isOnline) {
-            for (searchResult in dataModels){
+            for (searchResult in dataModels) {
                 parseOnlineResult(searchResult, newDataModel)
             }
-        }else {
-            for (searchResult in dataModels){
+        } else {
+            for (searchResult in dataModels) {
                 newDataModel.add(DataModel(searchResult.text, searchResult.meanings))
             }
         }
@@ -43,14 +43,14 @@ fun getSuccessResultData(
 }
 
 fun parseOnlineResult(dataModel: DataModel, newDataModel: java.util.ArrayList<DataModel>) {
-    if (!dataModel.text.isNullOrBlank() && !dataModel.meanings.isNullOrEmpty()){
-        val newMeanings  = arrayListOf<Meanings>()
-        for (meaning in dataModel.meanings){
-            if (meaning.translation != null && !meaning.translation.text.isNullOrBlank()){
-                newMeanings.add(Meanings(meaning.translation, meaning. imageUrl))
+    if (!dataModel.text.isNullOrBlank() && !dataModel.meanings.isNullOrEmpty()) {
+        val newMeanings = arrayListOf<Meanings>()
+        for (meaning in dataModel.meanings) {
+            if (meaning.translation != null && !meaning.translation.text.isNullOrBlank()) {
+                newMeanings.add(Meanings(meaning.translation, meaning.imageUrl))
             }
         }
-        if (newMeanings.isNotEmpty()){
+        if (newMeanings.isNotEmpty()) {
             newDataModel.add(DataModel(dataModel.text, newMeanings))
         }
     }

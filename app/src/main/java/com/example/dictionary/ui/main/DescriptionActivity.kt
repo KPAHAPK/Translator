@@ -35,7 +35,7 @@ class DescriptionActivity : AppCompatActivity() {
             context: Context,
             word: String,
             description: String,
-            url: String?
+            url: String?,
         ): Intent {
             return Intent(context, DescriptionActivity::class.java).apply {
                 putExtra(WORD_EXTRA, word)

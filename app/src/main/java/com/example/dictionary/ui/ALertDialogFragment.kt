@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.dictionary.R
 
-class AlertDialogFragment: AppCompatDialogFragment() {
+class AlertDialogFragment : AppCompatDialogFragment() {
 
     companion object {
 
@@ -30,8 +30,8 @@ class AlertDialogFragment: AppCompatDialogFragment() {
             .setTitle(title)
             .setMessage(message)
             .setCancelable(true)
-            .setPositiveButton(R.string.dialog_button_cancel){
-                    dialog, _ -> dialog.dismiss()
+            .setPositiveButton(R.string.dialog_button_cancel) { dialog, _ ->
+                dialog.dismiss()
             }
             .create()
     }

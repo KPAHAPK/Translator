@@ -26,11 +26,14 @@ abstract class BaseActivity<T : AppState, V : Interactor<AppState>> : AppCompatA
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
+
+
         isNetworkAvailable = isOnline(applicationContext)
     }
 
     override fun onResume() {
         super.onResume()
+        binding = LoadingLayoutBinding.inflate(layoutInflater)
         isNetworkAvailable = isOnline(applicationContext)
         if (!isNetworkAvailable && isDialogNull()) {
             showNoInternetConnectionDialog()
@@ -55,7 +58,7 @@ abstract class BaseActivity<T : AppState, V : Interactor<AppState>> : AppCompatA
                 appState.data?.let {
                     if (it.isEmpty()) {
                         showAlertDialog(
-                            getString(R.string.dialog_title_sorry),
+                            getString(R.string.dialog_tittle_sorry),
                             getString(R.string.empty_server_response_on_success)
                         )
                     } else {
@@ -84,7 +87,7 @@ abstract class BaseActivity<T : AppState, V : Interactor<AppState>> : AppCompatA
         }
     }
 
-    fun showAlertDialog(title: String, message: String) {
+    private fun showAlertDialog(title: String, message: String) {
         AlertDialogFragment.newInstance(title, message)
             .show(supportFragmentManager, DIALOG_FRAGMENT_TAG)
     }

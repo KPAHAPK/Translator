@@ -4,10 +4,10 @@ import androidx.room.*
 
 @Dao
 interface HistoryDao {
-    @Query("SELECT * FROM history")
+    @Query("SELECT * FROM historyDB")
     suspend fun getAll(): List<HistoryEntity>
 
-    @Query("SELECT * FROM history WHERE word LIKE :word")
+    @Query("SELECT * FROM historyDB WHERE word LIKE :word")
     suspend fun getDataByWord(word: String): HistoryEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

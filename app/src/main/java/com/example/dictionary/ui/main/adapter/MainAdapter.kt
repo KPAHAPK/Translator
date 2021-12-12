@@ -8,7 +8,7 @@ import com.example.dictionary.databinding.ActivityMainRecyclerviewItemBinding
 import com.example.dictionary.model.data.DataModel
 
 class MainAdapter(
-    private var onListItemClickListener: OnListItemClickListener
+    private var onListItemClickListener: OnListItemClickListener,
 ) : RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
 
     lateinit var itemBinding: ActivityMainRecyclerviewItemBinding
@@ -22,7 +22,7 @@ class MainAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): RecyclerItemViewHolder {
         itemBinding = ActivityMainRecyclerviewItemBinding.inflate(
             LayoutInflater.from(parent.context),

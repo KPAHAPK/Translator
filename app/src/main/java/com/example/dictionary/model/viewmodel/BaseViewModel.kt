@@ -19,7 +19,7 @@ abstract class BaseViewModel<T : AppState>(
     abstract fun getData(word: String, isOnline: Boolean)
 
     override fun onCleared() {
-        cancelJob()
+        viewModelCoroutineScope.cancel()
     }
 
     protected fun cancelJob() {
