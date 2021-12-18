@@ -18,7 +18,8 @@ class CoilImageLoader(private val context: Context) : IImageLoader {
                     imageView.setImageDrawable(result)
                 },
                 onError = {
-                    imageView.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_load_error_vector))
+                    imageView.setImageDrawable(AppCompatResources.getDrawable(context,
+                        R.drawable.ic_load_error_vector))
                 }
             )
             .transformations(

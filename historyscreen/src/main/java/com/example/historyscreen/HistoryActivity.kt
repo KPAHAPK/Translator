@@ -15,6 +15,7 @@ class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {
     private val adapter: HistoryAdapter by lazy {
         HistoryAdapter()
     }
+    val model: HistoryViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +31,8 @@ class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {
     }
 
     private fun initViewModel() {
-        if (binding.historyActivityRecyclerview.adapter != null) {
-            throw IllegalStateException("The ViewModel should be initialised first")
-        }
-        val model: HistoryViewModel by viewModel()
         viewModel = model
-        viewModel.subscribe().observe(this, Observer {
+        viewModel.subscribe().observe(this, {
             renderData(it)
         })
     }

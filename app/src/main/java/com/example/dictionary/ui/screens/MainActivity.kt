@@ -7,13 +7,13 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.BaseActivity
 import com.example.dictionary.R
-import com.example.dictionary.utils.convertMeaningsToString
 import com.example.dictionary.databinding.ActivityMainBinding
-import com.example.dictionary.isOnline
+import com.example.utils.networkutils.isOnline
 import com.example.dictionary.ui.main.MainInteractor
 import com.example.dictionary.ui.main.MainViewModel
 import com.example.dictionary.ui.main.SearchDialogFragment
 import com.example.dictionary.ui.main.adapter.MainAdapter
+import com.example.dictionary.utils.convertMeaningsToString
 import com.example.historyscreen.HistoryActivity
 import com.example.model.AppState
 import com.example.model.DataModel

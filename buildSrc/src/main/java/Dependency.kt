@@ -32,10 +32,10 @@ object Versions {
     const val swiperefreshlayout = "1.0.0"
 
     //Kotlin
-    const val core = "1.7.0"
-    const val stdlib = "1.4.0"
-    const val coroutinesCore = "1.6.0-RC3"
-    const val coroutinesAndroid = "1.6.0-RC3"
+    const val core = "1.6.0"
+    const val stdlib = "1.5.21"
+    const val coroutinesCore = "1.4.3"
+    const val coroutinesAndroid = "1.4.3"
 
     //Retrofit
     const val retrofit = "2.9.0"
@@ -51,6 +51,7 @@ object Versions {
     const val coil = "0.11.0"
 
     //Room
+    const val sqlite_jdbc = "3.34.0"
     const val roomKtx = "2.3.0-alpha02"
     const val runtime = "2.3.0-alpha02"
     const val roomCompiler = "2.3.0-alpha02"
@@ -64,12 +65,13 @@ object Versions {
 object Design {
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
     const val material = "com.google.android.material:material:${Versions.material}"
-    const val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swiperefreshlayout}"
+    const val swiperefreshlayout =
+        "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swiperefreshlayout}"
 }
 
 object Kotlin {
     const val core = "androidx.core:core-ktx:${Versions.core}"
-    const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.stdlib}"
+    const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.stdlib}"
     const val coroutines_core =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutinesCore}"
     const val coroutines_android =
@@ -95,6 +97,7 @@ object Coil {
 }
 
 object Room {
+    const val sqlite_jdbc = "org.xerial:sqlite-jdbc:${Versions.sqlite_jdbc}"
     const val runtime = "androidx.room:room-runtime:${Versions.runtime}"
     const val compiler = "androidx.room:room-compiler:${Versions.roomCompiler}"
     const val room_ktx = "androidx.room:room-ktx:${Versions.roomKtx}"

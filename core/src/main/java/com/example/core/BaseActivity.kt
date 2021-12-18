@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.core.databinding.LoadingLayoutBinding
 import com.example.core.viewmodel.BaseViewModel
 import com.example.core.viewmodel.Interactor
-import com.example.dictionary.isOnline
+import com.example.utils.networkutils.isOnline
 import com.example.model.AppState
 import com.example.model.DataModel
 import com.example.utils.ui.AlertDialogFragment

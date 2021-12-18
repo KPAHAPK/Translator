@@ -12,7 +12,7 @@ fun parseLocalSearchResults(appState: AppState): AppState {
     return AppState.Success(mapResult(appState, false))
 }
 
-fun mapResult(appState: AppState, isOnline: Boolean): List<DataModel>? {
+fun mapResult(appState: AppState, isOnline: Boolean): List<DataModel> {
     val newSearchResult = arrayListOf<DataModel>()
     when (appState) {
         is AppState.Success -> {
@@ -53,21 +53,6 @@ fun parseOnlineResult(dataModel: DataModel, newDataModel: java.util.ArrayList<Da
             newDataModel.add(DataModel(dataModel.text, newMeanings))
         }
     }
-}
-
-fun parseSearchResult(data: AppState): AppState {
-    val newSearchResults = arrayListOf<DataModel>()
-    when (data) {
-        is AppState.Success -> {
-            val searchResults = data.data
-            if (!searchResults.isNullOrEmpty()) {
-                searchResults.forEach { searchResult ->
-                    parseResult(searchResult, newSearchResults)
-                }
-            }
-        }
-    }
-    return AppState.Success(newSearchResults)
 }
 
 fun parseResult(dataModel: DataModel, newListDataModel: ArrayList<DataModel>) {
