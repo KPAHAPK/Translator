@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dictionary.databinding.ActivityMainRecyclerviewItemBinding
-import com.example.dictionary.model.data.DataModel
+import com.example.model.DataModel
 
 class MainAdapter(
     private var onListItemClickListener: OnListItemClickListener,

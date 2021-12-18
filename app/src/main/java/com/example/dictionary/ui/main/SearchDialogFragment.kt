@@ -6,7 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.dictionary.databinding.FragmentSearchDialogBinding
+import com.example.dictionary.databinding.SearchDialogFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class SearchDialogFragment : BottomSheetDialogFragment() {
@@ -15,8 +15,8 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
         fun newInstance() = SearchDialogFragment()
     }
 
-    private var _binding: FragmentSearchDialogBinding? = null
-    private val binding: FragmentSearchDialogBinding
+    private var _binding: SearchDialogFragmentBinding? = null
+    private val binding: SearchDialogFragmentBinding
         get() = _binding!!
     private var onSearchClickListener: OnSearchClickListener? = null
 
@@ -53,7 +53,7 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentSearchDialogBinding.inflate(inflater, container, false)
+        _binding = SearchDialogFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 

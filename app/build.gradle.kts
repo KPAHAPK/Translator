@@ -1,20 +1,20 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-android-extensions")
     id("kotlin-kapt")
 }
 
 android {
-    compileSdk = 30
-    buildToolsVersion = "30.0.3"
+    compileSdk = Config.compile_sdk
+    buildToolsVersion = Config.build_tool_version
 
     defaultConfig {
-        applicationId = "com.example.dictionary"
-        minSdk = 21
-        targetSdk = 30
-        versionCode = 1
-        versionName = "1.0"
+        compileSdk
+        applicationId = Config.application_id
+        minSdk = Config.min_sdk
+        targetSdk = Config.target_sdk
+        versionCode = Releases.version_code
+        versionName = Releases.version_name
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -30,16 +30,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_1_8)
-        targetCompatibility(JavaVersion.VERSION_1_8)
+        sourceCompatibility(Config.java_version)
+        targetCompatibility(Config.java_version)
     }
 
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-
-    buildFeatures {
-        viewBinding = true
     }
 }
 
@@ -49,15 +45,16 @@ dependencies {
     implementation(project(Modules.model))
     implementation(project(Modules.repository))
     implementation(project(Modules.utils))
-    implementation(project(Modules.historyScreen) )
+    implementation(project(Modules.historyScreen))
 
     // AndroidX
     implementation(Design.appcompat)
 
     // Design
-    // You should not use the com.android.support and
-    // com.google.android.material dependencies in your app at the same time
+    // не следует указывать com.android.support и
+    // com.google.android.material зависимости вместе
     implementation(Design.material)
+    implementation(Design.swiperefreshlayout)
 
     // Kotlin
     implementation(Kotlin.core)
@@ -81,9 +78,7 @@ dependencies {
     testImplementation(TestImpl.junit)
     androidTestImplementation(TestImpl.runner)
     androidTestImplementation(TestImpl.espresso)
-//    implementation(fileTree(org.gradle.internal.impldep.bsh.commands.dir:
-//        'libs',
-//        include:['*.jar']))
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 }
 
 

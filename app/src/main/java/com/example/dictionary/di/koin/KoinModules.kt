@@ -1,18 +1,13 @@
 package com.example.dictionary.di.koin
 
 import androidx.room.Room
-import com.example.dictionary.history.HistoryDataBase
-import com.example.dictionary.history.HistoryInteractor
-import com.example.dictionary.history.HistoryViewModel
-import com.example.dictionary.model.data.DataModel
-import com.example.dictionary.model.datasource.RetrofitImplementation
-import com.example.dictionary.model.datasource.RoomDataBaseImplementation
-import com.example.dictionary.model.repository.Repository
-import com.example.dictionary.model.repository.RepositoryImplementation
-import com.example.dictionary.model.repository.RepositoryLocal
-import com.example.dictionary.model.repository.RepositoryLocalImplementation
-import com.example.dictionary.model.viewmodel.MainViewModel
 import com.example.dictionary.ui.main.MainInteractor
+import com.example.dictionary.ui.main.MainViewModel
+import com.example.historyscreen.HistoryInteractor
+import com.example.historyscreen.HistoryViewModel
+import com.example.model.DataModel
+import com.example.repository.*
+import com.example.repository.room.HistoryDataBase
 import org.koin.dsl.module
 
 val application = module {
@@ -27,8 +22,8 @@ val application = module {
 }
 
 val mainScreen = module {
-    factory { MainInteractor(get(), get()) }
     factory { MainViewModel(get()) }
+    factory { MainInteractor(get(), get()) }
 }
 
 val historyScreen = module {

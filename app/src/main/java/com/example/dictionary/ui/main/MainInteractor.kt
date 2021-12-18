@@ -1,9 +1,10 @@
 package com.example.dictionary.ui.main
 
-import com.example.dictionary.model.data.AppState
-import com.example.dictionary.model.data.DataModel
-import com.example.dictionary.model.repository.Repository
-import com.example.dictionary.model.repository.RepositoryLocal
+import com.example.core.viewmodel.Interactor
+import com.example.model.AppState
+import com.example.model.DataModel
+import com.example.repository.Repository
+import com.example.repository.RepositoryLocal
 
 class MainInteractor(
     private val repositoryRemote: Repository<List<DataModel>>,
