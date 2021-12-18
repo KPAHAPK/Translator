@@ -6,7 +6,7 @@ import com.example.dictionary.model.data.AppState
 import kotlinx.coroutines.*
 
 abstract class BaseViewModel<T : AppState>(
-    protected val mutableLiveData: MutableLiveData<T> = MutableLiveData(),
+    protected val _mutableLiveData: MutableLiveData<T> = MutableLiveData(),
 ) : ViewModel() {
 
     protected val viewModelCoroutineScope =
@@ -19,7 +19,7 @@ abstract class BaseViewModel<T : AppState>(
     abstract fun getData(word: String, isOnline: Boolean)
 
     override fun onCleared() {
-        cancelJob()
+        viewModelCoroutineScope.cancel()
     }
 
     protected fun cancelJob() {

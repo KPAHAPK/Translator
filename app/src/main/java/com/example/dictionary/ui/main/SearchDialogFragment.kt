@@ -51,7 +51,7 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSearchDialogBinding.inflate(inflater, container, false)
         return binding.root
@@ -73,6 +73,11 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
 
     interface OnSearchClickListener {
         fun onClick(searchWord: String)
+    }
+
+    override fun onDestroy() {
+        onSearchClickListener = null
+        super.onDestroy()
     }
 
     internal fun setOnSearchClickListener(listener: OnSearchClickListener) {
