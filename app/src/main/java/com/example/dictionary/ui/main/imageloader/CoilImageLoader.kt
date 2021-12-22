@@ -2,6 +2,7 @@ package com.example.dictionary.ui.main.imageloader
 
 import android.content.Context
 import android.widget.ImageView
+import androidx.appcompat.content.res.AppCompatResources
 import coil.ImageLoader
 import coil.request.LoadRequest
 import coil.transform.CircleCropTransformation
@@ -17,7 +18,8 @@ class CoilImageLoader(private val context: Context) : IImageLoader {
                     imageView.setImageDrawable(result)
                 },
                 onError = {
-                    imageView.setImageDrawable(context.getDrawable(R.drawable.ic_load_error_vector))
+                    imageView.setImageDrawable(AppCompatResources.getDrawable(context,
+                        R.drawable.ic_load_error_vector))
                 }
             )
             .transformations(

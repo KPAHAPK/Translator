@@ -1,10 +1,17 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
     }
 }
 rootProject.name = "Dictionary"
 include ':app'
+include ':buildsrc'
+include ':core'
+include ':historyscreen'
+include ':model'
+include ':repository'
+include ':utils'
