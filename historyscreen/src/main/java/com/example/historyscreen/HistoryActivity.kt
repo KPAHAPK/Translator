@@ -1,12 +1,11 @@
 package com.example.historyscreen
 
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import com.example.core.BaseActivity
 import com.example.historyscreen.databinding.ActivityHistoryBinding
 import com.example.model.AppState
 import com.example.model.DataModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.scope.currentScope
 
 class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {
 
@@ -15,7 +14,7 @@ class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {
     private val adapter: HistoryAdapter by lazy {
         HistoryAdapter()
     }
-    val model: HistoryViewModel by viewModel()
+    val model: HistoryViewModel by currentScope.inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,13 +3,15 @@ package com.example.core
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.core.databinding.LoadingLayoutBinding
 import com.example.core.viewmodel.BaseViewModel
 import com.example.core.viewmodel.Interactor
-import com.example.utils.networkutils.isOnline
 import com.example.model.AppState
 import com.example.model.DataModel
+import com.example.utils.networkutils.OnlineLiveData
+import com.example.utils.networkutils.isOnline
 import com.example.utils.ui.AlertDialogFragment
 
 abstract class BaseActivity<T : AppState, V : Interactor<AppState>> : AppCompatActivity() {
@@ -25,9 +27,17 @@ abstract class BaseActivity<T : AppState, V : Interactor<AppState>> : AppCompatA
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
+        subscribeToNetworkChange()
+    }
 
-
-        isNetworkAvailable = isOnline(applicationContext)
+    private fun subscribeToNetworkChange() {
+        OnlineLiveData(this).observe(this) {
+            isNetworkAvailable = it
+            if (!isNetworkAvailable) {
+                Toast.makeText(this, R.string.dialog_message_device_is_offline, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
     }
 
     override fun onResume() {

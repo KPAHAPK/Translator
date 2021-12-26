@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.BaseActivity
 import com.example.dictionary.R
 import com.example.dictionary.databinding.ActivityMainBinding
-import com.example.utils.networkutils.isOnline
 import com.example.dictionary.ui.main.MainInteractor
 import com.example.dictionary.ui.main.MainViewModel
 import com.example.dictionary.ui.main.SearchDialogFragment
@@ -17,7 +16,7 @@ import com.example.dictionary.utils.convertMeaningsToString
 import com.example.historyscreen.HistoryActivity
 import com.example.model.AppState
 import com.example.model.DataModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.scope.currentScope
 import android.view.View as androidView
 
 class MainActivity : BaseActivity<AppState, MainInteractor>() {
@@ -49,12 +48,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     private val onSearchClickListener: SearchDialogFragment.OnSearchClickListener =
         object : SearchDialogFragment.OnSearchClickListener {
             override fun onClick(searchWord: String) {
-                isNetworkAvailable = isOnline(applicationContext)
-                if (isNetworkAvailable) {
                     viewModel.getData(searchWord, isNetworkAvailable)
-                } else {
-                    showNoInternetConnectionDialog()
-                }
             }
 
         }
@@ -64,7 +58,6 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         searchDialogFragment.setOnSearchClickListener(onSearchClickListener)
         searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +73,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
             throw IllegalStateException("The ViewModel should be initialised first")
         }
 
-        val model: MainViewModel by viewModel()
+        val model: MainViewModel by currentScope.inject()
         viewModel = model
         viewModel.subscribe().observe(this) {
             renderData(it)
