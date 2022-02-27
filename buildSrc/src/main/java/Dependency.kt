@@ -3,8 +3,8 @@ import org.gradle.api.JavaVersion
 object Config {
     const val application_id = "com.example.dictionary"
     const val compile_sdk = 31
-    const val min_sdk = 21
-    const val target_sdk = 30
+    const val min_sdk = 25
+    const val target_sdk = 31
     const val build_tool_version = "30.0.3"
     val java_version = JavaVersion.VERSION_1_8
 }

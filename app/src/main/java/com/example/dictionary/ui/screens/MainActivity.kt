@@ -1,9 +1,15 @@
 package com.example.dictionary.ui.screens
 
+import android.animation.ObjectAnimator
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewTreeObserver
+import android.view.animation.AnticipateInterpolator
+import androidx.core.animation.doOnEnd
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.BaseActivity
 import com.example.dictionary.R
@@ -48,7 +54,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     private val onSearchClickListener: SearchDialogFragment.OnSearchClickListener =
         object : SearchDialogFragment.OnSearchClickListener {
             override fun onClick(searchWord: String) {
-                    viewModel.getData(searchWord, isNetworkAvailable)
+                viewModel.getData(searchWord, isNetworkAvailable)
             }
 
         }
@@ -64,8 +70,60 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initSplashScreen()
         initViewModel()
         initViews()
+    }
+
+    private fun initSplashScreen() {
+        setSplashScreenDuration()
+        setSplashScreenAnimation()
+    }
+
+    private fun setSplashScreenAnimation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            splashScreen.setOnExitAnimationListener { splashScreenView ->
+                val slideLeft = ObjectAnimator.ofFloat(
+                    splashScreenView,
+                    android.view.View.TRANSLATION_X,
+                    0f,
+                    -splashScreenView.height.toFloat()
+                )
+                slideLeft.interpolator = AnticipateInterpolator()
+                slideLeft.duration = 1000L
+                slideLeft.doOnEnd { splashScreenView.remove() }
+                slideLeft.start()
+            }
+        }
+    }
+
+    private fun setSplashScreenDuration() {
+        var isHideSplashScreen = false
+        object : CountDownTimer(2000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+
+            }
+
+            override fun onFinish() {
+                isHideSplashScreen = true
+            }
+
+        }.start()
+
+        val content = findViewById<android.view.View>(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    return if (isHideSplashScreen) {
+                        content.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else {
+                        false
+                    }
+                }
+
+            }
+        )
     }
 
     private fun initViewModel() {
