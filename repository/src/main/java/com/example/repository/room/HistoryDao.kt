@@ -5,21 +5,21 @@ import androidx.room.*
 @Dao
 interface HistoryDao {
 
-    @Query("SELECT * FROM historyDB")
-    fun getAll(): List<HistoryEntity>
+    @Query("SELECT * FROM HistoryEntity")
+    suspend fun getAll(): List<HistoryEntity>
 
-    @Query("SELECT * FROM historyDB WHERE word LIKE :word")
-    fun getDataByWord(word: String): HistoryEntity
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(entity: HistoryEntity)
+    @Query("SELECT * FROM HistoryEntity WHERE word LIKE :word")
+    suspend fun getDataByWord(word: String): HistoryEntity
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(entities: List<HistoryEntity>)
+    suspend fun insert(entity: HistoryEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAll(entities: List<HistoryEntity>)
 
     @Update
-    fun update(entity: HistoryEntity)
+    suspend fun update(entity: HistoryEntity)
 
     @Delete
-    fun delete(entity: HistoryEntity)
+    suspend fun delete(entity: HistoryEntity)
 }

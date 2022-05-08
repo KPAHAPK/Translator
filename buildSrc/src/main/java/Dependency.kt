@@ -52,9 +52,9 @@ object Versions {
 
     //Room
     const val sqlite_jdbc = "3.34.0"
-    const val roomKtx = "2.3.0-alpha02"
-    const val runtime = "2.3.0-alpha02"
-    const val roomCompiler = "2.3.0-alpha02"
+    const val roomKtx = "2.4.2"
+    const val runtime = "2.4.2"
+    const val roomCompiler = "2.4.2"
 
     //Test
     const val jUnit = "4.13"

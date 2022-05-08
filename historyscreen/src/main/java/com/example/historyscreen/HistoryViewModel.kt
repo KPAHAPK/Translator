@@ -3,7 +3,9 @@ package com.example.historyscreen
 import androidx.lifecycle.LiveData
 import com.example.core.viewmodel.BaseViewModel
 import com.example.model.AppState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HistoryViewModel(private val interactor: HistoryInteractor) : BaseViewModel<AppState>() {
 
@@ -26,8 +28,10 @@ class HistoryViewModel(private val interactor: HistoryInteractor) : BaseViewMode
     }
 
     private suspend fun startInteractor(word: String, isOnline: Boolean) {
-        val result = parseLocalSearchResults(interactor.getData(word, isOnline))
-        _mutableLiveData.postValue(result)
+        withContext(Dispatchers.IO) {
+            val result = parseLocalSearchResults(interactor.getData(word, isOnline))
+            _mutableLiveData.postValue(result)
+        }
     }
 
     override fun onCleared() {

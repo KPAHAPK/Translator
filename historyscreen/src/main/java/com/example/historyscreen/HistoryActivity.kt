@@ -31,9 +31,9 @@ class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {
 
     private fun initViewModel() {
         viewModel = model
-        viewModel.subscribe().observe(this, {
+        viewModel.subscribe().observe(this) {
             renderData(it)
-        })
+        }
     }
 
     override fun onResume() {
