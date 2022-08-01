@@ -20,6 +20,8 @@ class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {
         super.onCreate(savedInstanceState)
         binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        title = getString(R.string.histroy_screen_title)
+
 
         initViewModel()
         initViews()

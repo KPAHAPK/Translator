@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">history</string>
+    <string name="histroy_screen_title">History</string>
 </resources>
